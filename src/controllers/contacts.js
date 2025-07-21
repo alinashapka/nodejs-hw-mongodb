@@ -1,6 +1,12 @@
 import createHttpError from 'http-errors';
 
-import { getAllContacts, getContactById } from '../services/contacts.js';
+import {
+  getAllContacts,
+  getContactById,
+  createContact,
+  updateContact,
+  deleteContact,
+} from '../services/contacts.js';
 
 export async function getAllContactsController(req, res) {
   const contacts = await getAllContacts();
@@ -61,23 +67,23 @@ export async function updateContactController(req, res) {
   });
 }
 
-export async function replaceContactController(req, res) {
-  const { value, updatedExisting } = await replaceContact(
-    req.params.id,
-    req.body,
-  );
+// export async function replaceContactController(req, res) {
+//   const { value, updatedExisting } = await replaceContact(
+//     req.params.id,
+//     req.body,
+//   );
 
-  if (updatedExisting === true) {
-    return res.json({
-      status: 200,
-      message: 'Contact replaced successfully',
-      data: value,
-    });
-  }
+//   if (updatedExisting === true) {
+//     return res.json({
+//       status: 200,
+//       message: 'Contact replaced successfully',
+//       data: value,
+//     });
+//   }
 
-  res.status(201).json({
-    status: 201,
-    message: 'Contact created successfully',
-    data: value,
-  });
-}
+//   res.status(201).json({
+//     status: 201,
+//     message: 'Contact created successfully',
+//     data: value,
+//   });
+// }
