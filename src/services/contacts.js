@@ -1,6 +1,12 @@
 import { Contact } from '../models/contacts.js';
 
-export const getAllContacts = async (page, perPage, sortBy, sortOrder) => {
+export const getAllContacts = async (
+  page,
+  perPage,
+  sortBy,
+  sortOrder,
+  userId,
+) => {
   const skip = (page - 1) * perPage;
 
   const [contacts, totalItems] = await Promise.all([
@@ -29,22 +35,20 @@ export const getContactById = async (contactId, userId) => {
   return contact;
 };
 
-export const createContact = async (payload, userId) => {
-  const contact = await Contact.create({ ...payload, userId });
+export const createContact = async (payload) => {
+  const contact = await Contact.create(payload);
   return contact;
 };
 
-export const updateContact = async (contactId, updateData, userId) => {
-  const updatedContact = await Contact.findOneAndUpdate(
-    { _id: contactId, userId },
-    updateData,
-    { new: true },
-  );
+export const updateContact = async (contactId, payload) => {
+  const updatedContact = await Contact.findOneAndUpdate(contactId, payload, {
+    new: true,
+  });
 
   return updatedContact;
 };
 
-export const deleteContact = async (contactId, userId) => {
-  const deleted = await Contact.findByIdAndDelete({ _id: contactId, userId });
+export const deleteContact = async (contactId) => {
+  const deleted = await Contact.findByIdAndDelete(contactId);
   return deleted;
 };
