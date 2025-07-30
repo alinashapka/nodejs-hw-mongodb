@@ -3,7 +3,7 @@ import createHttpError from 'http-errors';
 import { User } from '../models/user.js';
 import { Session } from '../models/session.js';
 
-export async function auth(req, res, next) {
+export async function authenticate(req, res, next) {
   const { authorization } = req.headers;
 
   if (typeof authorization !== 'string') {
