@@ -9,9 +9,11 @@ export const getAllContacts = async (
 ) => {
   const skip = (page - 1) * perPage;
 
+  const sortValue = sortOrder === 'desc' ? -1 : 1;
+
   const [contacts, totalItems] = await Promise.all([
     Contact.find({ userId })
-      .sort({ [sortBy]: sortOrder })
+      .sort({ [sortBy]: sortValue })
       .skip(skip)
       .limit(perPage),
     Contact.countDocuments({ userId }),
