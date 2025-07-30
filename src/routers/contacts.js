@@ -16,9 +16,12 @@ import {
   updateContactSchema,
 } from '../validation/contact.js';
 
+import { authenticate } from '../middlewares/authenticate.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const router = express.Router();
+
+router.use(authenticate);
 
 router.get('/', ctrlWrapper(getAllContactsController));
 

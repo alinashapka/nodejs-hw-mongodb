@@ -14,8 +14,15 @@ import { parseSortParams } from '../utils/parseSortParams.js';
 export async function getAllContactsController(req, res) {
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams(req.query);
+  const userId = req.user._id;
 
-  const contacts = await getAllContacts(page, perPage, sortBy, sortOrder);
+  const contacts = await getAllContacts(
+    userId,
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+  );
 
   res.json({
     status: 200,
@@ -26,7 +33,9 @@ export async function getAllContactsController(req, res) {
 
 export async function getContactController(req, res) {
   const { id } = req.params;
-  const contact = await getContactById(id);
+  const userId = req.user._id;
+
+  const contact = await getContactById(id, userId);
 
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
@@ -40,7 +49,8 @@ export async function getContactController(req, res) {
 }
 
 export async function createContactController(req, res) {
-  const contact = await createContact(req.body);
+  const userId = req.user._id;
+  const contact = await createContact(req.body, userId);
 
   res.status(201).json({
     status: 201,
@@ -50,7 +60,8 @@ export async function createContactController(req, res) {
 }
 
 export async function deleteContactController(req, res) {
-  const result = await deleteContact(req.params.id);
+  const userId = req.user._id;
+  const result = await deleteContact(req.params.id, userId);
 
   if (result === null) {
     throw new createHttpError.NotFound('Contact not found');
@@ -60,7 +71,8 @@ export async function deleteContactController(req, res) {
 }
 
 export async function updateContactController(req, res) {
-  const result = await updateContact(req.params.id, req.body);
+  const userId = req.user._id;
+  const result = await updateContact(req.params.id, req.body, userId);
 
   if (result === null) {
     throw new createHttpError.NotFound('Contact not found');
