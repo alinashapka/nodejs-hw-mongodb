@@ -17,11 +17,11 @@ export async function getAllContactsController(req, res) {
   const userId = req.user._id;
 
   const contacts = await getAllContacts(
-    userId,
     page,
     perPage,
     sortBy,
     sortOrder,
+    userId,
   );
 
   res.json({
