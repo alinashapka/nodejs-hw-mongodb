@@ -56,7 +56,7 @@ export async function createContactController(req, res) {
   if (getEnvVar('UPLOAD_TO_CLOUDINARY') === 'true') {
     const result = await uploadToCloudinary(req.file.path);
     await fs.unlink(req.file.path);
-    avatar = result.secure_url;
+    photo = result.secure_url;
   } else {
     await fs.rename(
       req.file.path,
