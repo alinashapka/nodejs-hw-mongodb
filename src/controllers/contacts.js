@@ -1,5 +1,7 @@
 import createHttpError from 'http-errors';
 
+import fs from 'fs/promises';
+
 import {
   getAllContacts,
   getContactById,
