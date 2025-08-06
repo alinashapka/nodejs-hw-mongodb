@@ -61,7 +61,7 @@ export async function createContactController(req, res) {
       req.file.path,
       path.resolve('src/uploads/photos', req.file.filename),
     );
-    photo = `http://localhost:300/photos/${req.file.filename}`;
+    photo = `http://localhost:3000/photos/${req.file.filename}`;
   }
 
   const userId = req.user._id;
