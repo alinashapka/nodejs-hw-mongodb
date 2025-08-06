@@ -94,11 +94,13 @@ export async function sendResetEmail(email) {
     },
   );
 
+  const resetLink = `${getEnvVar('APP_DOMAIN')}/reset-password?token=${token}`;
+
   try {
     await sendEmail({
       to: email,
       subject: 'Reset password',
-      html: `<p>To reset password please visit this <a href="http://localhost:3000/reset-password/${token}">link</a></p>`,
+      html: `<p>To reset password please visit this <a href="${resetLink}">link</a></p>`,
     });
   } catch (error) {
     throw new Error('Failed to send the email, please try again later.');

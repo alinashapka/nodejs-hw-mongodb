@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export function sendEmail(mail) {
-  mail.from = 'alinkash2811@gmail.com';
+  mail.from = getEnvVar('SMTP_FROM');
 
-  return transporter.sendEmail(mail);
+  return transporter.sendMail(mail);
 }
