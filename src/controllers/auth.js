@@ -77,7 +77,7 @@ export async function refreshController(req, res) {
 }
 
 export async function sendResetEmailController(req, res) {
-  await requestPasswordReset(req.body.email);
+  await sendResetEmail(req.body.email);
 
   res.json({
     status: 200,
@@ -89,7 +89,7 @@ export async function sendResetEmailController(req, res) {
 export async function resetPwdController(req, res) {
   const { token, password } = req.body;
 
-  await resetPassword(token, password);
+  await resetPwd(token, password);
 
   res.json({
     status: 200,
