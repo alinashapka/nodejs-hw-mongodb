@@ -52,7 +52,7 @@ export async function getContactController(req, res) {
 export async function createContactController(req, res) {
   let photo = null;
 
-  if (getEnvVariable('UPLOAD_TO_CLOUDINARY') === 'true') {
+  if (getEnvVar('UPLOAD_TO_CLOUDINARY') === 'true') {
     const result = await uploadToCloudinary(req.file.path);
     await fs.unlink(req.file.path);
     avatar = result.secure_url;

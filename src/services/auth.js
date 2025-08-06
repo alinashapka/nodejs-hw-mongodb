@@ -8,7 +8,7 @@ import { User } from '../models/user.js';
 import { Session } from '../models/session.js';
 
 import { sendEmail } from '../utils/sendEmail.js';
-import { getEnvVariable } from '../utils/getEnvVariable.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
 
 export async function registerUser(payload) {
   const user = await User.findOne({ email: payload.email });
@@ -88,7 +88,7 @@ export async function sendResetEmail(email) {
       sub: user._id,
       name: user.name,
     },
-    getEnvVariable('JWT_SECRET'),
+    getEnvVar('JWT_SECRET'),
     {
       expiresIn: '5m',
     },
@@ -107,7 +107,7 @@ export async function sendResetEmail(email) {
 
 export async function resetPwd(token, password) {
   try {
-    const decoded = jwt.verify(token, getEnvVariable('JWT_SECRET'));
+    const decoded = jwt.verify(token, getEnvVar('JWT_SECRET'));
 
     const user = await User.findById(decoded.sub);
 

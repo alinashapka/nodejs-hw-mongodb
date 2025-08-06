@@ -1,11 +1,11 @@
 import cloudinary from 'cloudinary';
 
-import { getEnvVariable } from './getEnvVariable.js';
+import { getEnvVar } from './getEnvVar.js';
 
 cloudinary.v2.config({
-  cloud_name: getEnvVariable('CLOUDINARY_CLOUD_NAME'),
-  api_key: getEnvVariable('CLOUDINARY_API_KEY'),
-  api_secret: getEnvVariable('CLOUDINARY_API_SECRET'),
+  cloud_name: getEnvVar('CLOUDINARY_CLOUD_NAME'),
+  api_key: getEnvVar('CLOUDINARY_API_KEY'),
+  api_secret: getEnvVar('CLOUDINARY_API_SECRET'),
 });
 
 export function uploadToCloudinary(filePath) {
