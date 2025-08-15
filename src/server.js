@@ -22,7 +22,7 @@ export const setupServer = () => {
   app.use('/contacts', contactsRouter);
   app.use('/auth', authRouter);
   app.use('/photos', express.static(path.resolve('src/uploads/photos')));
-  app.use('/api-docs', swaggerDocs());
+  app.use('/api-docs', ...swaggerDocs());
 
   app.use(notFoundHandler);
 
