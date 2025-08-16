@@ -13,6 +13,7 @@ parameters:
       type: string
       example: 64f0b1b2a3c4e5f678901234
 requestBody:
+  required: true
   content:
     multipart/form-data:
       schema:
@@ -30,9 +31,13 @@ requestBody:
             type: string
             description: Contact's type
             enum: ['personal', 'work', 'other']
+          photo:
+            type: string
+            format: binary
+            description: Contact's photo
 responses:
   '200':
-    description: Updated contact
+    description: Contact updated successfully
     content:
       application/json:
         schema:
