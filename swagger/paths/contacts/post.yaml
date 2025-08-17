@@ -2,11 +2,10 @@ tags:
   - Contacts
 summary: Create contact
 operationId: createContact
-description: Create contact
+description: 'Create a contact'
 security:
   - bearerAuth: []
 requestBody:
-  required: true
   content:
     multipart/form-data:
       schema:
@@ -17,20 +16,33 @@ requestBody:
           - contactType
         properties:
           name:
+            description: "Contact's name"
             type: string
-            description: Contact name
-            example: John Doe
+            example: 'John Doe'
           phoneNumber:
+            description: 'Contact`s phone number'
             type: string
-            description: Contact's phone number
-            example: 123-123-123
+            example: '+380504561235'
+          email:
+            description: 'Contact`s email'
+            type: string
+            example: 'john.doe@example.com'
+          isFavourite:
+            description: 'Whether the contact is marked as favourite'
+            type: boolean
+            example: true
           contactType:
+            description: 'Contact`s type'
             type: string
-            description: Contact's type
-            enum: ['personal', 'work', 'other']
+            enum: ['work', 'home', 'personal']
+            example: 'personal'
+          photo:
+            description: "Link to contact's photo"
+            type: string
+            format: binary
 responses:
   '201':
-    description: Contact created successfully
+    description: Creates a contact
     content:
       application/json:
         schema:
@@ -45,12 +57,9 @@ responses:
               example: 201
             message:
               type: string
-              example: Contact created successfully
+              example: Successfully created a contact!
             data:
-              $ref: ../../components/schemas/contact.yaml
-  '400':
-    $ref: ../../components/responses/400.yaml
+              type: object
+              $ref: '../../components/schemas/contact.yaml'
   '401':
-    $ref: ../../components/responses/401.yaml
-  '500':
-    $ref: ../../components/responses/500.yaml
+    $ref: '../../components/responses/401.yaml'

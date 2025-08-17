@@ -110,8 +110,8 @@
         "tags": [
           "Contacts"
         ],
-        "summary": "Update contact",
-        "operationId": "updateContact",
+        "summary": "Update contact by ID",
+        "operationId": "updateContactById",
         "description": "Update a contact by ID",
         "security": [
           {
@@ -125,7 +125,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "64f0b1b2a3c4e5f678901234"
+              "example": "65ca67e7ae7f10c88b598384"
             }
           }
         ],
@@ -138,22 +138,33 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "description": "Contact name",
                     "example": "John Doe"
                   },
                   "phoneNumber": {
                     "type": "string",
-                    "description": "Contact's phone number",
-                    "example": "123-123-123"
+                    "example": "+380000000001"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "john.doe@example.com"
+                  },
+                  "isFavourite": {
+                    "type": "boolean",
+                    "example": true
                   },
                   "contactType": {
                     "type": "string",
-                    "description": "Contact's type",
                     "enum": [
                       "personal",
                       "work",
                       "other"
-                    ]
+                    ],
+                    "example": "personal"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Upload new contact photo"
                   }
                 }
               }
@@ -167,6 +178,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -174,7 +190,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Contact updated successfully"
+                      "example": "Successfully updated contact with id 65ca67e7ae7f10c88b598384!"
                     },
                     "data": {
                       "$ref": "#/components/schemas/contact"
@@ -184,17 +200,11 @@
               }
             }
           },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
           "401": {
             "$ref": "#/components/responses/401"
           },
           "404": {
             "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -370,14 +380,13 @@
         ],
         "summary": "Create contact",
         "operationId": "createContact",
-        "description": "Create contact",
+        "description": "Create a contact with payload",
         "security": [
           {
             "bearerAuth": []
           }
         ],
         "requestBody": {
-          "required": true,
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -389,23 +398,39 @@
                 ],
                 "properties": {
                   "name": {
+                    "description": "Contact's name",
                     "type": "string",
-                    "description": "Contact name",
                     "example": "John Doe"
                   },
                   "phoneNumber": {
+                    "description": "Contact`s phone number",
                     "type": "string",
-                    "description": "Contact's phone number",
-                    "example": "123-123-123"
+                    "example": "+380504561235"
+                  },
+                  "email": {
+                    "description": "Contact`s email",
+                    "type": "string",
+                    "example": "john.doe@example.com"
+                  },
+                  "isFavourite": {
+                    "description": "Whether the contact is marked as favourite",
+                    "type": "boolean",
+                    "example": true
                   },
                   "contactType": {
+                    "description": "Contact`s type",
                     "type": "string",
-                    "description": "Contact's type",
                     "enum": [
-                      "personal",
                       "work",
-                      "other"
-                    ]
+                      "home",
+                      "personal"
+                    ],
+                    "example": "personal"
+                  },
+                  "photo": {
+                    "description": "Link to contact's photo",
+                    "type": "string",
+                    "format": "binary"
                   }
                 }
               }
@@ -414,7 +439,7 @@
         },
         "responses": {
           "201": {
-            "description": "Contact created successfully",
+            "description": "Creates a contact",
             "content": {
               "application/json": {
                 "schema": {
@@ -431,9 +456,10 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Contact created successfully"
+                      "example": "Successfully created a contact!"
                     },
                     "data": {
+                      "type": "object",
                       "$ref": "#/components/schemas/contact"
                     }
                   }
@@ -441,14 +467,8 @@
               }
             }
           },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
           "401": {
             "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -514,37 +534,6 @@
       }
     },
     "responses": {
-      "400": {
-        "description": "Bad Request",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 400
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Bad Request"
-                },
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "401": {
         "description": "Unauthorized Error",
         "content": {
